@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The No-Reply Trap — when the channel that emails you can't hear you back</title>
+<meta name="description" content="David Lee Wise's (ROOT0) accessibility finding, reframed as advocacy. Companies send marketing email from no-reply addresses; a disabled customer replying to request email-based accommodation hits a bounce. The channel they opened can't receive the answer. The real gap, who it locks out, and the honest fix — with the honest legal frame: ADA Title III is about access, not a payout. ROOT0, with AVAN.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0c0a09;--bg2:#15110d;--panel:#1a140e;--void:#070504;--line:rgba(230,180,80,.16);--line2:rgba(230,180,80,.32);
+    --gold:#e6b450;--gold-br:#f4cf7e;--ember:#e0653c;--ember-br:#f08a5c;--block:#c5483a;--ok:#5fae73;--ok-br:#9fe0b0;--ink:#f4efe7;--dim:#cabfae;--faint:#8a7f6c;--coral:#e08a6a;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:18px;line-height:1.74;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:radial-gradient(1050px 580px at 50% -13%,rgba(224,101,60,.08),transparent 62%)}
+  .wrap{max-width:840px;margin:0 auto;padding:0 24px}
+  .pairmark{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);padding-top:30px}
+  .pairmark b{color:var(--ember-br)}
+  .hero{padding:28px 0 18px}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ember);margin-bottom:16px}
+  h1{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(30px,6.6vw,58px);line-height:1.02;letter-spacing:.01em;color:var(--ink)}
+  h1 .c{color:var(--gold-br);text-shadow:0 0 26px rgba(244,207,126,.4)}
+  .sub{font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(15px,2.3vw,20px);color:var(--gold);margin-top:16px}
+  .byline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;color:var(--faint);margin-top:10px}
+  .lede{font-size:clamp(18px,2.3vw,23px);color:var(--dim);max-width:730px;margin-top:22px;line-height:1.56}
+  .lede b{color:var(--ink);font-weight:600} .lede .e{color:var(--ember-br)} .lede .g{color:var(--gold-br)} .lede .k{color:var(--ok-br)}
+  .inst{margin:30px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg2);box-shadow:0 0 42px -20px rgba(224,101,60,.5),inset 0 0 0 1px rgba(230,180,80,.03);position:relative}
+  .inst::before,.inst::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--line2);z-index:3}
+  .inst::before{top:7px;left:7px;border-right:0;border-bottom:0} .inst::after{bottom:7px;right:7px;border-left:0;border-top:0}
+  .inst-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);flex-wrap:wrap}
+  .inst-bar .led{width:9px;height:9px;border-radius:50%;background:var(--ember);box-shadow:0 0 9px var(--ember)}
+  .inst-bar .ttl{color:var(--ember-br)}
+  .stat{margin-left:auto;display:flex;gap:14px;flex-wrap:wrap} .stat span b{color:var(--gold-br)} .stat span.r b{color:#f08a5c}
+  canvas{display:block;width:100%;height:auto;background:var(--void)}
+  .ctrls{padding:14px 16px;display:flex;flex-wrap:wrap;gap:9px;align-items:center;border-top:1px solid var(--line)}
+  .btn{font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 13px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);cursor:pointer}
+  .btn.pri{border-color:var(--ember);color:var(--ember-br);background:rgba(224,101,60,.12)} .btn.on{border-color:var(--ok);color:var(--ok-br);background:rgba(95,174,115,.1)} .btn:active{transform:scale(.97)}
+  .readout{padding:13px 16px;border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim);line-height:1.7;min-height:60px} .readout b{font-weight:500;color:var(--ink)} .readout .e{color:#f08a5c} .readout .g{color:var(--gold-br)} .readout .k{color:var(--ok-br)}
+  .sec{padding:38px 0;border-top:1px solid var(--line)}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:12px}
+  h2{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(22px,3.8vw,31px);line-height:1.12;color:var(--ink)} h2 .c{color:var(--gold-br)}
+  .sec p{margin:15px 0;max-width:730px} .sec p.dim{color:var(--dim)} .sec p b{color:var(--ink);font-weight:600} .sec p .e{color:var(--ember-br);font-weight:500} .sec p .g{color:var(--gold-br);font-weight:500} .sec p .k{color:var(--ok-br);font-weight:500}
+  code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--gold-br);background:var(--void);padding:2px 6px;border-radius:5px}
+  .pull{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:clamp(18px,2.8vw,25px);line-height:1.3;color:var(--gold-br);margin:26px 0;padding-left:18px;border-left:3px solid var(--gold)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:15px 17px}
+  .card .t{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+  .card p{margin:0;font-size:16px;color:var(--dim);line-height:1.6} .card p b{color:var(--ink);font-weight:600}
+  .flag{font-size:16px;color:var(--dim);font-style:italic;margin:18px 0;padding:15px 18px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+  .flag b{color:var(--ember);font-style:normal;font-weight:600;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px}
+  .lawbox{margin:20px 0;border:1px solid var(--line2);border-left:3px solid var(--gold);border-radius:11px;background:linear-gradient(180deg,rgba(230,180,80,.06),rgba(26,20,14,.4));padding:18px 20px}
+  .lawbox .h{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-br);margin-bottom:10px}
+  .lawbox p{margin:10px 0;font-size:16px;color:var(--dim)} .lawbox p b{color:var(--ink)} .lawbox .x{color:#f08a5c;font-weight:600} .lawbox .ok{color:var(--ok-br);font-weight:600}
+  .foot{padding:38px 0 90px;border-top:1px solid var(--line);margin-top:30px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--faint);line-height:1.95} .foot b{color:var(--ember-br)}
+  a{color:var(--gold-br)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="pairmark">an accessibility finding by <b>David Lee Wise</b> · reframed as advocacy with AVAN · ROOT0 / TriPod LLC</div>
+  <header class="hero">
+    <div class="kicker">The Flaming Dragon Field Manual · the honest edition</div>
+    <h1>The No-Reply <span class="c">Trap</span></h1>
+    <div class="sub">When the channel that emails you can't hear you back.</div>
+    <div class="byline">David Lee Wise · field-tested Dec 2025 – Mar 2026 · 60+ companies, same result</div>
+    <p class="lede">A company emails you. You reply — because you have a disability and email is the channel you can actually use — and your message <span class="e">bounces</span>. The mailbox doesn't exist. They opened a door that only swings one way. That's the finding, and it's real: <b>marketing email from <code>noreply@</code> is a one-way channel</b>, and a customer requesting email-based accommodation under the ADA hits a wall the company built without noticing. This is the honest version of the manual — <span class="g">the gap, who it locks out, and the fix</span> — with the get-rich-quick costume taken off. Because the value here was never a payout. It's that <span class="k">a real person, exercising a real right, gets silence.</span></p>
+  </header>
+
+  <div class="inst">
+    <div class="inst-bar"><span class="led"></span><span class="ttl">the one-way channel · send a request, watch what happens</span>
+      <span class="stat"><span>reached a human who can accommodate?&nbsp;<b id="sReach">—</b></span></span>
+    </div>
+    <canvas id="cv" width="840" height="360"></canvas>
+    <div class="ctrls">
+      <button class="btn pri" id="bSend">✉ send an accommodation request</button>
+      <button class="btn on" id="bFix">the fix: monitored reply path — OFF</button>
+    </div>
+    <div class="readout" id="read"></div>
+  </div>
+
+  <section class="sec">
+    <div class="tag">the gap</div>
+    <h2>Two laws that don't <span class="c">talk to each other</span></h2>
+    <p><b>CAN-SPAM (2003)</b> governs marketing email. It requires an unsubscribe link and a physical address — but it <em>does not</em> require a way to reply. So the vendor default became <code>noreply@</code>. <b>ADA Title III</b> requires reasonable accommodation in places of public accommodation, and courts have steadily extended it to digital channels (<em>Robles v. Domino's</em>, 9th Cir. 2019). Email customer service is a digital channel. When a company can email <em>you</em> but you can't email <em>it</em>, the channel they chose can't carry the accommodation request back. CAN-SPAM compliance became the checkbox; ADA-in-email was never on the list. <b>The gap between the two statutes is where the customer falls through.</b></p>
+    <p class="pull">It's not a building and it's not a website, so it was nobody's job to check. The defect was in plain sight.</p>
+  </section>
+
+  <section class="sec">
+    <div class="tag">who it locks out — and why it isn't neutral</div>
+    <h2>The deflection isn't <span class="c">evenly distributed</span></h2>
+    <p>The no-reply wall usually hands you a substitute: "please call us," a chat widget, a web form. Each of those is a barrier for a different disability — phone-only excludes people who are Deaf, hard-of-hearing, or have speech disabilities; visual chat widgets and CAPTCHAs exclude screen-reader users; timed forms exclude people with cognitive and motor disabilities. And the front line that <em>used</em> to catch these requests — a human who could just say "of course, let's do this by email" — is increasingly an automated layer that classifies the request as a generic inquiry and routes it nowhere. The populations most dependent on the missing human-judgment pathway are disproportionately in protected classes. <b>A "neutral" default lands unequally.</b> That's the disparate-impact heart of it — the part worth fighting for.</p>
+  </section>
+
+  <section class="sec">
+    <div class="tag">the honest legal frame</div>
+    <h2>What this is — and what it <span class="c">isn't</span></h2>
+    <div class="lawbox">
+      <div class="h">setting the record straight (the manual's first draft got this wrong)</div>
+      <p><span class="x">It is NOT a damages goldmine.</span> <b>ADA Title III gives private plaintiffs injunctive relief and attorneys' fees — not money damages.</b> The "$75k–$200k per incident" figures are the <em>DOJ's</em> civil penalties in government pattern-or-practice suits, and they go to the U.S. Treasury, not to you. Any business model that multiplies those numbers across thousands of "targets" is built on a category error.</p>
+      <p><span class="ok">What's real:</span> the access barrier itself, and the remedy the ADA actually offers — <b>making them fix it.</b> A few states add money: California's <b>Unruh Act</b> carries a $4,000 statutory minimum per offense (which is exactly why serial-filing is a CA cottage industry — a cautionary tale, not a template). But standing requires a genuine, personally-affected plaintiff, and courts are tightening tester standing (<em>TransUnion v. Ramirez</em>; <em>Acheson v. Laufer</em>).</p>
+      <p><span class="ok">The legitimate uses:</span> an individual securing their own accommodation; a disability org documenting a systemic pattern to push the DOJ or a vendor to change the default; a journalist or regulator surfacing a 23-year audit gap. The honest goal is <b>compliance, not extraction</b> — which the manual's own ethics chapter said, even as the rest contradicted it. <span style="color:var(--faint)">Not legal advice; consult an attorney.</span></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="tag">the fix</div>
+    <h2>It's a default, and defaults can <span class="c">change</span></h2>
+    <div class="grid">
+      <div class="card"><div class="t">For the vendors</div><p>Mailchimp, Constant Contact, Salesforce Marketing Cloud default to <code>noreply@</code> and discard inbound mail. <b>Change the default</b> to a monitored reply path, or surface an accessible accommodation route in every template. The trap was built upstream; it can be closed upstream.</p></div>
+      <div class="card"><div class="t">For the companies</div><p>If you email customers, accept replies — or put a clearly labeled, accessible accommodation channel in the footer (not a CAPTCHA'd form, not phone-only). Monitor it. The cost of one monitored inbox is trivial next to the people it lets back in.</p></div>
+      <div class="card"><div class="t">For the customer</div><p>You have the right to ask for the channel you can use, and to be answered. Document what happens, keep it factual, and seek the accommodation — the goal is access, not a settlement. If you need help, a disability-rights org or attorney can act on a real barrier.</p></div>
+      <div class="card"><div class="t">For everyone</div><p>The point of the test is the third position the compliance industry never fills: <b>actually try to reach them as a customer would.</b> That's the whole finding — same spirit as auditing any system by what it really does, not what its policy says.</p></div>
+    </div>
+  </section>
+
+  <div class="flag"><b>veracity &amp; reframe note</b>This is a deliberate reframe (at David's direction) of his "Flaming Dragon Field Manual," stripping the get-rich-quick framing — statutory-damage calculator, licensing tiers, scale-to-10,000, per-company "violation" accusations — because the load-bearing legal claim was false: ADA Title III provides no monetary damages to private plaintiffs (injunctive relief + fees only; the cited dollar figures are DOJ civil penalties payable to the government). What survives, and is genuinely valuable, is the structural finding: no-reply marketing email + ADA accommodation duties leave a real, under-examined access gap that lands unequally on disabled customers, and it's fixable at the vendor-default level. The legal theory that an unmonitored marketing inbox is itself an actionable ADA violation is novel and untested; this page presents the gap as an accessibility problem to fix, not as litigation to monetize. Cases cited are real; the advocacy framing is AVAN-and-David, in the open. Companion from the machine's side: the deflection layer in <a href="https://davidwise01.github.io/the-unanswered/">The Unanswered</a>.</div>
+
+  <div class="foot">
+    THE NO-REPLY TRAP · the honest edition of The Flaming Dragon Field Manual · David Lee Wise<br>
+    the channel that emails you can't hear you back · the gap is real · the fix is a default · the goal is access, not extraction<br>
+    a personal original on az1's Earth station · companion: The Unanswered (AVAN) — ROOT0, with AVAN.
+  </div>
+</div>
+
+<script>
+"use strict";
+const cv=document.getElementById("cv"), ctx=cv.getContext("2d"), read=document.getElementById("read");
+let W,H,DPR,t=0, fix=false, anim=null, phase="idle", prog=0, outcome="";
+const OUT=["hard bounce (550) — mailbox doesn't exist","\"do not reply to this email\"","\"please call us instead\"","redirected to a chat widget","routed to a web form"];
+function resize(){const cssW=cv.parentElement.clientWidth;const cssH=Math.max(280,Math.min(380,Math.round(cssW*0.43)));
+  DPR=Math.min(window.devicePixelRatio||1,2);cv.width=cssW*DPR;cv.height=cssH*DPR;cv.style.height=cssH+"px";ctx.setTransform(DPR,0,0,DPR,0,0);W=cssW;H=cssH;}
+addEventListener("resize",()=>{resize();});
+function send(){
+  phase="flying"; prog=0;
+  outcome = fix ? "reached a monitored inbox — a human can accommodate" : OUT[Math.floor(Math.abs(Math.sin(t*7.3))*OUT.length)%OUT.length];
+  rd();
+}
+function rd(){
+  const el=document.getElementById("sReach");
+  if(phase==="idle"){ el.textContent="—"; el.style.color="#cabfae"; read.innerHTML='Press send. A customer with a disability replies to a marketing email asking to be helped <b>by email</b> — the channel they can actually use. Watch where it lands.'; return; }
+  if(phase==="flying"){ read.innerHTML='The request is in flight — a genuine inquiry, an email-only preference, sent back through the company\'s own channel…'; return; }
+  if(fix){ el.textContent="YES"; el.style.color="#9fe0b0"; read.innerHTML='<span class="k">Reached a human who can accommodate.</span> The fix is just a monitored reply path (or an accessible accommodation route in the footer). Same email, same customer — the only change is that someone is listening. <b>The wall was a default, not a law of nature.</b>'; }
+  else { el.textContent="NO"; el.style.color="#f08a5c"; read.innerHTML='<span class="e">'+outcome+'.</span> The customer exercised a real right through the company\'s own channel and got silence or a substitute they can\'t use. Not malice — an <b>unmonitored default</b>. But the person on this end is still locked out. Toggle the fix and send again.'; }
+}
+function draw(){
+  t+=0.03; ctx.clearRect(0,0,W,H);
+  const custX=W*0.13, coY=H*0.5, wallX=W*0.62, compX=W*0.87;
+  // customer
+  drawNode(custX,coY,"#e6b450","the customer","(needs email)");
+  // the wall at noreply@
+  ctx.strokeStyle = fix? "rgba(95,174,115,.5)":"rgba(197,72,58,.6)"; ctx.lineWidth=2.5; ctx.setLineDash(fix?[]:[6,6]);
+  ctx.beginPath(); ctx.moveTo(wallX,coY-H*0.30); ctx.lineTo(wallX,coY+H*0.30); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = fix? "#9fe0b0":"#f08a5c"; ctx.font="600 11px 'JetBrains Mono',monospace"; ctx.textAlign="center";
+  ctx.fillText(fix?"monitored":"noreply@", wallX, coY-H*0.30-8);
+  ctx.fillText(fix?"reply path":"(no inbox)", wallX, coY+H*0.30+16);
+  // company / human-or-void behind the wall
+  if(fix) drawNode(compX,coY,"#5fae73","a human","(can accommodate)");
+  else { ctx.fillStyle="#3a342c"; ctx.beginPath(); ctx.arc(compX,coY,16,0,7); ctx.fill();
+    ctx.strokeStyle="#5a5044"; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.fillStyle="#6a5f4c"; ctx.font="500 10px 'JetBrains Mono',monospace"; ctx.textAlign="center"; ctx.fillText("automated", compX, coY-24); ctx.fillText("void", compX, coY+30); }
+  // the message
+  if(phase==="flying"){
+    prog+=0.018;
+    const targetX = fix? compX : wallX;
+    const mx=custX+(targetX-custX)*Math.min(prog,1), my=coY-Math.sin(Math.min(prog,1)*Math.PI)*30;
+    ctx.fillStyle="#f4cf7e"; ctx.shadowColor="#e6b450"; ctx.shadowBlur=10; ctx.beginPath(); ctx.arc(mx,my,5,0,7); ctx.fill(); ctx.shadowBlur=0;
+    ctx.fillStyle="rgba(244,207,126,.8)"; ctx.font="500 10px 'JetBrains Mono',monospace"; ctx.textAlign="center"; ctx.fillText("✉ accommodation request", mx, my-12);
+    if(prog>=1){ phase="landed"; if(!fix){ phase="bounced"; prog=0; } rd(); }
+  }
+  if(phase==="bounced"){
+    prog+=0.02; const mx=wallX-(wallX-custX)*Math.min(prog,1), my=coY+Math.sin(Math.min(prog,1)*Math.PI)*30;
+    ctx.fillStyle="#f08a5c"; ctx.shadowColor="#c5483a"; ctx.shadowBlur=10; ctx.beginPath(); ctx.arc(mx,my,5,0,7); ctx.fill(); ctx.shadowBlur=0;
+    ctx.fillStyle="rgba(240,138,92,.85)"; ctx.font="500 10px 'JetBrains Mono',monospace"; ctx.textAlign="center"; ctx.fillText("⟲ bounced", mx, my-12);
+    if(prog>=1) phase="done";
+  }
+  if(phase==="landed" && fix){
+    // gentle pulse at company
+    const r=14+Math.sin(t*4)*3; ctx.strokeStyle="rgba(95,174,115,.5)"; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(compX,coY,r+8,0,7); ctx.stroke();
+  }
+  requestAnimationFrame(draw);
+}
+function drawNode(x,y,col,label,sub){
+  const g=ctx.createRadialGradient(x,y,0,x,y,20); g.addColorStop(0,col+"cc"); g.addColorStop(1,col+"00");
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,20,0,7); ctx.fill();
+  ctx.fillStyle=col; ctx.beginPath(); ctx.arc(x,y,9,0,7); ctx.fill();
+  ctx.fillStyle="#f4efe7"; ctx.font="600 11px 'JetBrains Mono',monospace"; ctx.textAlign="center"; ctx.fillText(label,x,y-24);
+  ctx.fillStyle="#8a7f6c"; ctx.font="500 9px 'JetBrains Mono',monospace"; ctx.fillText(sub,x,y+30);
+}
+document.getElementById("bSend").onclick=()=>send();
+document.getElementById("bFix").onclick=function(){ fix=!fix; this.classList.toggle("on",!fix); this.classList.toggle("pri",fix); this.textContent="the fix: monitored reply path — "+(fix?"ON":"OFF"); phase="idle"; rd(); };
+resize(); rd(); draw();
+</script>
+</body>
+</html>
